@@ -15,6 +15,8 @@ if(isset($_GET['q']) && $_GET['q']!=''){
 	$row=mysqli_fetch_assoc($result);
 	$fname=$row['FNAME'];
 	$lname=$row['LNAME'];
+	$fnameOld=$row['FNAME'];
+	$lnameOld=$row['LNAME'];
 	$gender=$row['GENDER'];
 	$dob=$row['DOB'];
 	$phone=$row['PHONE_NUMBER'];
@@ -290,25 +292,11 @@ if(isset($_GET['q']) && $_GET['q']!=''){
 			$email=strtolower($email);
 			$eid=$_GET['q'];
 			$sql="UPDATE employee SET FNAME='$fname',LNAME='$lname',GENDER='$gender',DOB='$dob',EMAIL='$email',PHONE_NUMBER=$phone,ADDRESSLINE1='$addressLine1',LANDMARK='$landmark',PIN_CODE=$pinCode,CITY='$city',STATE='$state',COUNTRY='$country' WHERE EID=$eid";		
-			echo '<script>
-			var r = confirm("Do you really want to save the changes to redord of *** '.$fname.' '.$lname.' *** ?");
-			if (r == true) {
-				alert("Employee\'s record of  *** '.$fname.' '.$lname.' *** updated");
-				window.location.assign("save_update?fname='.$fname.'&lname='.$lname.'&gender='.$gender.'&dob='.$dob.'&email='.$email.'&phone='.$phone.'&addressLine1='.$addressLine1.'&landmark='.$landmark.'&pinCode='.$pinCode.'&city='.$city.'&state='.$state.'&country='.$country.'&eid='.$eid.'");
+			if(mysqli_query($conn,$sql)){
+				echo '<script>alert("Employee\'s record of  *** '.$fnameOld.' '.$lnameOld.' *** updated successfully.")</script>';
 			}else{
-				alert("Employee\'s record is not updated.");
-			}</script>';
-
-			// if($falg==true){
-			// 	$flag=false;
-			// 	if(mysqli_query($conn,$sql)){
-			// 	 	echo '<script>alert("Employee\'s record of  *** '.$fname.' '.$lname.' *** updated")</script>';
-			// 	}else{
-			// 	 	echo '<script>alert("Employee\'s record could not be updated due to some error.")</script>'.$sql;
-			// 	}
-			// }elseif($flag==false){
-			// 	echo '<script>alert("Employee\'s record is not updated.")</script>';
-			// }
+				echo '<script>alert("Employee\'s record is not updated due to some error.")</script>';
+			}	
 	}
 	?>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
