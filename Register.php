@@ -138,7 +138,7 @@ button:hover {
         <a class="nav-link">Sales</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="list.php">Employee <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="list.php">List Employee <span class="sr-only">(current)</span></a>
       </li>
     </ul>
     <span class="navbar-text" style="font-size: 20px;font-weight: bold;">
