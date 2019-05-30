@@ -21,15 +21,24 @@ if(isset($_POST['submit'])){
 	$city=$_POST['city'];
 	$addressLine1=ucfirst($_POST['addressLine1']);
 	$landmark=ucfirst(strtolower($_POST['landmark']));
-
 	$email=strtolower($email);
 	
-	$sql="INSERT into employee value (null,'$fname','$lname','$gender','$dob','$email',$phone,'$addressLine1','$landmark',$pinCode,'$city','$state','$country')";	
-	if(mysqli_query($conn,$sql)){
-	 	echo '<script>alert("New employee record of  *** '.$fname.' '.$lname.' *** inserted")</script>';
+	$sql="SELECT * FROM employee WHERE EMAIL=$email";
+	$r=mysqli_query($conn,$sql);
+	if(mysqli_num_rows($r)>0){
+		echo '<script>alert("Employee record could not be inserted as Email address you entered is already taken.")</script>';
 	}else{
-	 	echo '<script>alert("Employee record could not be inserted due to some error.")</script>';
+		$sql="INSERT into employee value (null,'$fname','$lname','$gender','$dob','$email',$phone,'$addressLine1','$landmark',$pinCode,'$city','$state','$country')";	
+		if(mysqli_query($conn,$sql)){
+		 	echo '<script>alert("New employee record of  *** '.$fname.' '.$lname.' *** inserted");
+		 	window.location.assign(\'./list\');
+		 	</script>';
+
+		}else{
+		 	echo '<script>alert("Employee record could not be inserted due to some error.")</script>';
+		}		
 	}
+
 }
 
 ?>
@@ -325,7 +334,9 @@ function validateForm() {
       // and set the current valid status to false
       valid = false;
     }
+
   }
+
   // If the valid status is true, mark the step as finished and valid:
   if (valid) {
     document.getElementsByClassName("step")[currentTab].className += " finish";
